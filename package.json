@@ -1,0 +1,31 @@
+{
+  "name": "mern2022-template",
+  "version": "1.0.0",
+  "description": "Tämä tehtävä sisältää sekä frontendin (client) että backendin (server) toteutusta. Tee React-osuudet frontend-kansioon, käytä haluamiasi alikansioita. Tee Node-osuudet backend-kansioon, käytä haluamiasi alikansioita. Frontendin muotoiluun voit käyttää joko React-Bootstrapia tai  Material-UI-kirjastoa HUOM! Muut UI-kirjastot eivät kelpaa!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "json-server -p3001 --watch ./frontend/src/db.json"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
+    "bootstrap": "^5.1.3",
+    "express-validator": "^6.14.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.6",
+    "mongoose-unique-validator": "^3.1.0",
+    "react": "^18.1.0",
+    "react-confirm-alert": "^3.0.6",
+    "react-dom": "^18.1.0",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "^5.0.1",
+    "uuid": "^8.3.2",
+    "uuidv4": "^6.2.13"
+  },
+  "devDependencies": {
+    "json-server": "^0.17.0",
+    "nodemon": "^2.0.16"
+  }
+}

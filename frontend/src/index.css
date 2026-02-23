@@ -1,0 +1,239 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.App {
+  font-family: sans-serif;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.App .navbar {
+  width: 100%;
+  min-height: 10vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: #ffffff;
+  background: rgb(32, 170, 161);
+}
+
+.App .navbar .nav-links {
+  width: 40%;
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+}
+
+.App .navbar .nav-links > a {
+  color: #fff;
+  text-decoration: none;
+  margin: 10px;
+}
+
+.navbar > ul {
+  margin-bottom: 0;
+}
+
+.textTitle {
+  margin: 10px;
+  text-align: center;
+  color: teal;
+}
+.cardsWrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 15px;
+  width: 90%;
+  margin-bottom: 20px;
+}
+.storiesWrapper {
+  padding: 15px;
+  text-align: center;
+}
+.loginWrapper {
+  padding: 15px;
+}
+
+.addWrapper {
+  padding: 15px;
+}
+.usersWrapper {
+  padding: 15px;
+}
+.usersHeader {
+  display: flex;
+  justify-content: center;
+}
+
+.cardWrap {
+  box-shadow: rgb(0 0 0 / 36%) 1px 1px 10px;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 6px;
+  background-color: rgb(180, 235, 231);
+  width: 40%;
+}
+
+.storyWrap {
+  box-shadow: rgb(0 0 0 / 26%) 1px 1px 10px;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.tableHead {
+  padding: 10px;
+  text-align: center;
+}
+.tableRow {
+  margin: 20px;
+  text-align: center;
+}
+.tableCell {
+  padding: 15px;
+  text-align: center;
+}
+.userWrap {
+  box-shadow: rgb(0 0 0 / 26%) 1px 1px 10px;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+}
+.cards-layout {
+  display: flex;
+  justify-content: center;
+}
+.simpleBtn {
+  margin: 10px;
+}
+
+.hero {
+  display: flex;
+  justify-content: center;
+}
+.heroImg {
+  width: 400px;
+  border-radius: 15px;
+}
+
+.btnLink:link {
+  text-decoration: none;
+}
+
+.btnLink:visited {
+  text-decoration: none;
+}
+
+.btnLink:hover {
+  text-decoration: underline;
+}
+
+.btnLink:active {
+  text-decoration: underline;
+}
+
+/*login*/
+.Auth-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* width: 100vw;
+  height: 80vh; */
+}
+
+.Auth-form {
+  width: 420px;
+  box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  border-radius: 8px;
+  background-color: white;
+}
+
+.Auth-form-content {
+  padding-left: 12%;
+  padding-right: 12%;
+}
+
+.Auth-form-title {
+  text-align: center;
+  margin-bottom: 1em;
+  font-size: 24px;
+  color: rgb(34, 34, 34);
+  font-weight: 800;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(34, 34, 34);
+}
+
+.footer {
+  font-size: smaller;
+}
+
+.footer > p {
+  line-height: 0.8;
+  margin: 15px;
+}
+
+/*story create*/
+
+.Add-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* width: 100vw;
+  height: 80vh; */
+}
+
+.Add-form {
+  width: 420px;
+  box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  border-radius: 8px;
+  background-color: white;
+}
+
+.Add-form-content {
+  padding-left: 12%;
+  padding-right: 12%;
+}
+
+.Add-form-title {
+  text-align: center;
+  margin-bottom: 1em;
+  font-size: 24px;
+  color: rgb(34, 34, 34);
+  font-weight: 800;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(34, 34, 34);
+}
+
+.footer {
+  font-size: smaller;
+}
+
+.footer > p {
+  line-height: 0.8;
+  margin: 15px;
+}
+/*form*/
+
+.formWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 75%;
+  margin: auto;
+}
