@@ -14,7 +14,8 @@ TODO:
 
 Pictures taken from pexels.com, unsplash.com (free images for public use)
 
-The project was implemented as a part of MERN course by Savonia AMK
+The project was implemented as a part of MERN course by Savonia AMK in 2022
+Updated in 2026
 
 `
 Main page
