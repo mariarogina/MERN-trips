@@ -8,7 +8,9 @@ npm start
 ```
 MongoDB Connect link is for testing purpose
 
-TODO: deployment with secret variables
+TODO: 
+- deployment with secret variables
+- user profiles
 
 Pictures taken from pexels.com, unsplash.com (free images for public use)
 
