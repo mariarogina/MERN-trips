@@ -22,14 +22,14 @@ Updated in 2026
 Main page
 `
 
-<img width="1000" height="500" alt="image" src="https://github.com/user-attachments/assets/4d4ca3e1-3b7a-42aa-82f2-303e0f2878da" />
+<img width="1000" height="550" alt="image" src="https://github.com/user-attachments/assets/4d4ca3e1-3b7a-42aa-82f2-303e0f2878da" />
 
 
 `
 Stories page
 `
 
-<img width="1000" height="500" alt="image" src="https://github.com/user-attachments/assets/819b6bed-8b56-4dd2-b169-2f2b5a0945f0" />
+<img width="1000" height="550" alt="image" src="https://github.com/user-attachments/assets/819b6bed-8b56-4dd2-b169-2f2b5a0945f0" />
 
 
 
