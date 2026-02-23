@@ -72,7 +72,12 @@ const Stories = ({ editStoryId, setEditStoryId }) => {
                 <tr className="tableRow" key={story._id}>
                   <td className="tableCell">{formatDate(story.pvm)}</td>
                   <td className="tableCell">
-                    <Link to="/singleStory" state={{ data: story }}>
+                    <Link
+                      to={{
+                        pathname: `/singlestory/${story._id}`,
+                        state: { data: story },
+                      }}
+                    >
                       {story.kohde}
                     </Link>
                   </td>

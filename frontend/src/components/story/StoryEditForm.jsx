@@ -1,10 +1,9 @@
-import React from "react";
-import { useState, useEffect, useContext } from "react";
-import storiesService from "../../services/storiesService";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import UserContext from "../../contexts/userContext";
+import storiesService from "../../services/storiesService";
 
-//update existing story
+// Update existing story
 const StoryEditForm = ({ editStoryId }) => {
   const [story, setStory] = useState({});
   const userContext = useContext(UserContext);
@@ -12,16 +11,13 @@ const StoryEditForm = ({ editStoryId }) => {
   useEffect(() => {
     const fetchStory = async () => {
       const res = await storiesService.getStoryById(editStoryId);
-      console.log(res.data);
       setStory(res.data.story);
     };
-    fetchStory();
-  }, []);
 
-  const handleName = (e) => {
-    e.preventDefault();
-    setStory({ ...story, tekijänNimi: e.target.value });
-  };
+    if (editStoryId) {
+      fetchStory();
+    }
+  }, [editStoryId]);
 
   const handlePlace = (e) => {
     e.preventDefault();
@@ -48,9 +44,7 @@ const StoryEditForm = ({ editStoryId }) => {
     setStory({ ...story, kuva: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    console.log(story + " story from submit");
-    console.log(story.pvm);
+  const handleSubmit = () => {
     try {
       storiesService.updateStory(
         story._id,
@@ -69,7 +63,11 @@ const StoryEditForm = ({ editStoryId }) => {
     }
   };
 
-  console.log(editStoryId + "story id from FORM");
+  const authorNameKey = Object.keys(story).find(
+    (key) => key.includes("tekij") && key.includes("Nimi")
+  );
+  const authorName = authorNameKey ? story[authorNameKey] : "";
+
   return (
     <div className="loginWrapper">
       <div className="Auth-form-container">
@@ -78,7 +76,7 @@ const StoryEditForm = ({ editStoryId }) => {
             <h3 className="Auth-form-title">Edit a story</h3>
             <div className="form-group mt-3">
               <label>Author's name</label>
-              <p>{story.tekijänNimi}</p>
+              <p>{authorName}</p>
             </div>
 
             <div className="form-group mt-3">
@@ -87,10 +85,8 @@ const StoryEditForm = ({ editStoryId }) => {
                 type="date"
                 className="form-control mt-1"
                 placeholder="e.g 2022-02-02"
-                value={story.pvm}
-                onChange={(e) => {
-                  handleDate(e);
-                }}
+                value={story.pvm || ""}
+                onChange={handleDate}
                 required
               />
             </div>
@@ -100,10 +96,8 @@ const StoryEditForm = ({ editStoryId }) => {
                 type="text"
                 className="form-control mt-1"
                 placeholder="e.g Helsinki"
-                value={story.paikkakunta}
-                onChange={(e) => {
-                  handlePlace(e);
-                }}
+                value={story.paikkakunta || ""}
+                onChange={handlePlace}
                 required
               />
             </div>
@@ -113,10 +107,8 @@ const StoryEditForm = ({ editStoryId }) => {
                 type="text"
                 className="form-control mt-1"
                 placeholder="e.g. Nuuksio"
-                value={story.kohde}
-                onChange={(e) => {
-                  handleDestination(e);
-                }}
+                value={story.kohde || ""}
+                onChange={handleDestination}
                 required
               />
             </div>
@@ -126,10 +118,8 @@ const StoryEditForm = ({ editStoryId }) => {
                 type="text"
                 className="form-control mt-1"
                 placeholder="Your story"
-                value={story.tarina}
-                onChange={(e) => {
-                  handleStory(e);
-                }}
+                value={story.tarina || ""}
+                onChange={handleStory}
                 required
               />
             </div>
@@ -139,20 +129,14 @@ const StoryEditForm = ({ editStoryId }) => {
                 type="text"
                 className="form-control mt-1"
                 placeholder="https://..."
-                value={story.kuva}
-                onChange={(e) => {
-                  handlePic(e);
-                }}
+                value={story.kuva || ""}
+                onChange={handlePic}
                 required
               />
             </div>
             <div className="d-grid gap-2 mt-3">
               <Link className="btnLink" to="/mystories">
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  onClick={(e) => handleSubmit(e)}
-                >
+                <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
                   Submit
                 </button>
               </Link>

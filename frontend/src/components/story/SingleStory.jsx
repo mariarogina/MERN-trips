@@ -1,19 +1,23 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useLocation, useHistory } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import UserContext from "../../contexts/userContext";
 import usersService from "../../services/usersService";
 import storiesService from "../../services/storiesService";
 
-//have a look at a single story from /stories
-const SingleStory = ({ editStoryId, setEditStoryId }) => {
+// Have a look at a single story from /stories
+const SingleStory = ({ setEditStoryId }) => {
   const userContext = useContext(UserContext);
   const [userId, setUserId] = useState("");
   const location = useLocation();
-  const { data } = location.state;
+  const history = useHistory();
+  const { id } = useParams();
+  const [story, setStory] = useState(location.state?.data || null);
 
   useEffect(() => {
+    if (!userContext.email) {
+      return;
+    }
+
     const fetchUser = async (userEmailToFetch) => {
       const res = await usersService.getUserByMail(userEmailToFetch);
       return res.data.user[0]._id;
@@ -21,20 +25,32 @@ const SingleStory = ({ editStoryId, setEditStoryId }) => {
 
     (async () => {
       const fetchedUserId = await fetchUser(userContext.email);
-
       setUserId(fetchedUserId);
     })();
+  }, [userContext.email]);
 
-    // console.log(userId + "USERID");
-  }, []);
+  useEffect(() => {
+    if (story || !id) {
+      return;
+    }
+
+    const fetchStory = async () => {
+      const res = await storiesService.getStoryById(id);
+      setStory(res.data.story);
+    };
+
+    fetchStory();
+  }, [id, story]);
 
   const handleSetEditId = () => {
-    setEditStoryId(data._id);
+    if (story) {
+      setEditStoryId(story._id);
+    }
   };
-  const history = useHistory();
-  const handleRemoveStory = (id) => {
+
+  const handleRemoveStory = async (storyId) => {
     try {
-      storiesService.removeStory(id, userContext.token);
+      await storiesService.removeStory(storyId, userContext.token);
       alert("Story deleted from db");
       history.replace("/stories");
     } catch (err) {
@@ -43,12 +59,29 @@ const SingleStory = ({ editStoryId, setEditStoryId }) => {
   };
 
   const deleteStory = () => {
+    if (!story) {
+      return;
+    }
+
     if (window.confirm("Are you sure to delete this?")) {
-      handleRemoveStory(data._id);
+      handleRemoveStory(story._id);
     } else {
       alert("Deletion cancelled");
     }
   };
+
+  if (!story) {
+    return <div className="storyWrap">Loading story...</div>;
+  }
+
+  const authorIdKey = Object.keys(story).find(
+    (key) => key.includes("tekij") && key.includes("Id")
+  );
+  const authorNameKey = Object.keys(story).find(
+    (key) => key.includes("tekij") && key.includes("Nimi")
+  );
+  const authorId = authorIdKey ? story[authorIdKey] : "";
+  const authorName = authorNameKey ? story[authorNameKey] : "";
 
   return (
     <div className="storyWrap">
@@ -56,18 +89,13 @@ const SingleStory = ({ editStoryId, setEditStoryId }) => {
         <h3>Story</h3>
       </div>
 
-      {userId === data.tekijänId && (
+      {userId === authorId && (
         <div>
           <Link className="btnLink" to="/addstory">
             <button className="simpleBtn btn btn-success">+</button>
           </Link>
           <Link className="btnLink" to="/editstory">
-            <button
-              className="simpleBtn btn btn-secondary"
-              onClick={() => {
-                handleSetEditId();
-              }}
-            >
+            <button className="simpleBtn btn btn-secondary" onClick={handleSetEditId}>
               Edit story
             </button>
           </Link>
@@ -88,23 +116,23 @@ const SingleStory = ({ editStoryId, setEditStoryId }) => {
       )}
 
       <p>
-        Author:<b> {data.tekijänNimi}</b>
+        Author:<b> {authorName}</b>
       </p>
       <p>
-        From:<b> {data.paikkakunta}</b>
+        From:<b> {story.paikkakunta}</b>
       </p>
       <p>
-        Travel to:<b> {data.kohde}</b>
+        Travel to:<b> {story.kohde}</b>
       </p>
       <p>
-        Date : <b>{new Date(data.pvm).toString()}</b>
+        Date : <b>{new Date(story.pvm).toString()}</b>
       </p>
       <p>
-        Story: <b>{data.tarina}</b>
+        Story: <b>{story.tarina}</b>
       </p>
       <p>
         Photo:
-        <img alt="story photo" src={data.kuva} style={{ width: "200px" }}></img>
+        <img alt="Story" src={story.kuva} style={{ width: "200px" }} />
       </p>
     </div>
   );

@@ -1,16 +1,22 @@
 import React from "react";
-import "../../index.css";
 import { Link } from "react-router-dom";
-
+import "../../index.css";
 
 const User = ({ data }) => {
-  function getAge(dateString) {
-    var today = new Date();
-    var birthDate = new Date(dateString);
-    var age = today.getFullYear() - birthDate.getFullYear();
+  const getByKeyPart = (obj, keyPart) => {
+    const key = Object.keys(obj).find((item) => item.includes(keyPart));
+    return key ? obj[key] : "";
+  };
 
-    return age;
+  function getAge(dateString) {
+    const today = new Date();
+    const birthDate = new Date(dateString);
+    return today.getFullYear() - birthDate.getFullYear();
   }
+
+  const userEmail = getByKeyPart(data, "posti");
+  const birthYear = getByKeyPart(data, "syntym");
+
   return (
     <div className="userWrap">
       User
@@ -18,16 +24,21 @@ const User = ({ data }) => {
         Traveller:<b> {data.nimi}</b>
       </p>
       <p>
-        Age:<b> {getAge(data.syntymävuosi)}</b>
+        Age:<b> {getAge(birthYear)}</b>
       </p>
       <p>
         From: <b>{data.paikkakunta}</b>
       </p>
       <p>
-        Mail: <b>{data.sähköpostiosoite}</b>
+        Mail: <b>{userEmail}</b>
       </p>
       <p>
-        <Link to="/usersstories" state={{ mail: data.sähköpostiosoite }}>
+        <Link
+          to={{
+            pathname: `/usersstories/${encodeURIComponent(userEmail)}`,
+            state: { mail: userEmail },
+          }}
+        >
           {data.nimi}'s Stories
         </Link>
       </p>

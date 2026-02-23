@@ -56,7 +56,7 @@ export const App = () => {
               )}
             />
             <Route
-              path="/singlestory"
+              path="/singlestory/:id"
               render={() => (
                 <SingleStory
                   editStoryId={editStoryId}
@@ -83,7 +83,7 @@ export const App = () => {
                 />
               )}
             />
-            <Route path="/usersstories" component={UsersStories} />
+            <Route path="/usersstories/:mail?" component={UsersStories} />
             <Route component={Home} />
           </Switch>
         </div>

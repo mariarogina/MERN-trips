@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from "react";
-import "../../index.css";
-import User from "./User";
-import usersService from "../../services/usersService";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import "../../index.css";
+import usersService from "../../services/usersService";
 
-//users table
+// Users table
 const Users = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
     usersService.getAllUsers().then((response) => {
-      console.log("promise fulfilled");
-      console.log(response.data);
       setUsers(response.data);
     });
   }, []);
 
-  function getAge(dateString) {
-    var today = new Date();
-    var birthDate = new Date(dateString);
-    var age = today.getFullYear() - birthDate.getFullYear();
+  const getByKeyPart = (obj, keyPart) => {
+    const key = Object.keys(obj).find((item) => item.includes(keyPart));
+    return key ? obj[key] : "";
+  };
 
-    return age;
+  function getAge(dateString) {
+    const today = new Date();
+    const birthDate = new Date(dateString);
+    return today.getFullYear() - birthDate.getFullYear();
   }
 
   return (
@@ -35,23 +35,28 @@ const Users = () => {
             <th className="tableHead">Kuva</th>
           </tr>
           {users.map((user) => {
+            const userEmail = getByKeyPart(user, "posti");
+            const birthYear = getByKeyPart(user, "syntym");
+
             return (
               <tr className="tableRow" key={user._id}>
                 <td className="tableCell">
                   <Link
-                    to="/usersstories"
-                    state={{ mail: user.sähköpostiosoite }}
+                    to={{
+                      pathname: `/usersstories/${encodeURIComponent(userEmail)}`,
+                      state: { mail: userEmail },
+                    }}
                   >
                     {user.nimi}
                   </Link>
                 </td>
                 <td className="tableCell">{user.paikkakunta}</td>
-                <td className="tableCell">{getAge(user.syntymävuosi)}</td>
+                <td className="tableCell">{getAge(birthYear)}</td>
                 <td className="tableCell">
                   <img
                     style={{ width: "100px", height: "100px" }}
                     src={user.valokuvanNimi}
-                    alt=""
+                    alt="User"
                   />
                 </td>
               </tr>
@@ -59,14 +64,6 @@ const Users = () => {
           })}
         </tbody>
       </table>
-      {/* <div className="usersHeader">
-        <h2>Users</h2>
-      </div>
-      <ul>
-        {users.map((i) => {
-          return <User data={i} key={i._id} />;
-        })}
-      </ul> */}
     </div>
   );
 };
