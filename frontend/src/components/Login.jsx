@@ -116,7 +116,7 @@ const Login = () => {
               <h3 className="Auth-form-title">Sign In</h3>
               <div className="text-center">
                 Not registered yet?{" "}
-                <span className="link-primary" onClick={switchAuthMode}>
+                <span className="authSwitchLink" onClick={switchAuthMode}>
                   Sign Up
                 </span>
               </div>
@@ -176,7 +176,7 @@ const Login = () => {
             <h3 className="Auth-form-title">Sign Up</h3>
             <div className="text-center">
               Already registered?{" "}
-              <span className="link-primary" onClick={switchAuthMode}>
+              <span className="authSwitchLink" onClick={switchAuthMode}>
                 Sign In
               </span>
             </div>

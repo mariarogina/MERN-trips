@@ -259,6 +259,18 @@
   font-weight: 800;
 }
 
+.authSwitchLink {
+  color: #0d6efd;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-left: 6px;
+}
+
+.authSwitchLink:hover {
+  color: #0a58ca;
+}
+
 label {
   font-size: 14px;
   font-weight: 600;
