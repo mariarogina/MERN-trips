@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { useState, useEffect, useContext } from "react";
 import "../index.css";
 import { v4 as uuidv4 } from "uuid";
@@ -22,11 +22,11 @@ const StoriesTable = () => {
       <table border="1" style={{ width: "90%", margin: "auto" }}>
         <tbody>
           <tr className="tableRow">
-            <th className="tableHead">Pvm</th>
-            <th className="tableHead">Kohde</th>
-            <th className="tableHead">Tarina</th>
-            <th className="tableHead">Author</th>
-            <th className="tableHead">Kuva</th>
+            <th className="tableHead">Date</th>
+            <th className="tableHead">Place</th>
+            <th className="tableHead">Story</th>
+            <th className="tableHead">User</th>
+            <th className="tableHead">Pic</th>
           </tr>
           {stories.map((story) => {
             return (

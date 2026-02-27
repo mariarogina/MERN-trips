@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../index.css";
 import usersService from "../../services/usersService";
@@ -29,10 +29,10 @@ const Users = () => {
       <table border="0" style={{ width: "90%", margin: "auto" }}>
         <tbody>
           <tr className="tableRow">
-            <th className="tableHead">Nimi</th>
-            <th className="tableHead">Paikka</th>
-            <th className="tableHead">Ikä</th>
-            <th className="tableHead">Kuva</th>
+            <th className="tableHead">Name</th>
+            <th className="tableHead">Age</th>
+            <th className="tableHead">Place</th>
+            <th className="tableHead">Pic</th>
           </tr>
           {users.map((user) => {
             const userEmail = getByKeyPart(user, "posti");
@@ -50,8 +50,8 @@ const Users = () => {
                     {user.nimi}
                   </Link>
                 </td>
-                <td className="tableCell">{user.paikkakunta}</td>
                 <td className="tableCell">{getAge(birthYear)}</td>
+                <td className="tableCell">{user.paikkakunta}</td>
                 <td className="tableCell">
                   <img
                     style={{ width: "100px", height: "100px" }}

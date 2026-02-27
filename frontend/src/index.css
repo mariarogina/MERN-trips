@@ -25,23 +25,90 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 30px;
-  list-style: none;
+  gap: 14px;
   margin: 0 auto;
+  padding: 10px 0;
 }
 
-.App .navbar .nav-links > a {
+.App .navbar .nav-main,
+.App .navbar .nav-auth {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.App .navbar .nav-main {
+  justify-content: center;
+}
+
+.App .navbar .nav-auth {
+  justify-content: center;
+  gap: 16px;
+}
+
+.App .navbar .nav-user {
+  color: #000;
+  white-space: nowrap;
+}
+
+.App .navbar .nav-links a {
   color: #fff;
   text-decoration: none;
-  margin: 10px 0;
+  margin: 0;
   white-space: nowrap;
 }
 
 @media (max-width: 900px) {
   .App .navbar .nav-links {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 94%;
+  }
+
+  .App .navbar .nav-main {
     justify-content: center;
     flex-wrap: wrap;
-    padding: 10px 0;
+    gap: 18px;
+  }
+
+  .App .navbar .nav-auth {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .App .navbar .nav-user {
+    color: #000;
+    text-align: center;
+    width: 100%;
+    white-space: normal;
+  }
+
+  .storiesTableWrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .storiesTable {
+    width: 100%;
+    min-width: 0;
+    table-layout: fixed;
+  }
+
+  .storiesTable .tableHead,
+  .storiesTable .tableCell {
+    padding: 8px 4px;
+    font-size: 0.95rem;
+    word-break: break-word;
+  }
+
+  .storiesTable .tableCell img {
+    width: 64px !important;
+    height: 64px !important;
+    object-fit: cover;
   }
 }
 
@@ -66,6 +133,15 @@
 .storiesWrapper {
   padding: 15px;
   text-align: center;
+}
+
+.storiesTableWrap {
+  width: 100%;
+}
+
+.storiesTable {
+  width: 90%;
+  margin: auto;
 }
 .loginWrapper {
   padding: 15px;

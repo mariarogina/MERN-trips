@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+﻿import React, { useState, useEffect, useContext } from "react";
 import "../../index.css";
 import { Link } from "react-router-dom";
 import storiesService from "../../services/storiesService";
@@ -58,15 +58,15 @@ const Stories = ({ editStoryId, setEditStoryId }) => {
         return <Story data={i} key={i._id} />;
       })} */}
 
-      <div className="storiesWrapper">
-        <table border="0" style={{ width: "90%", margin: "auto" }}>
+      <div className="storiesTableWrap">
+        <table border="0" className="storiesTable">
           <tbody>
             <tr className="tableRow">
-              <th className="tableHead">Pvm</th>
-              <th className="tableHead">Kohde</th>
-              <th className="tableHead">Tarina</th>
-              <th className="tableHead">Kertoja</th>
-              <th className="tableHead">Kuva</th>
+              <th className="tableHead">Date</th>
+              <th className="tableHead">Place</th>
+              <th className="tableHead">Story</th>
+              <th className="tableHead">User</th>
+              <th className="tableHead">Pic</th>
             </tr>
             {storiesNewestFirst.map((story) => {
               return (
