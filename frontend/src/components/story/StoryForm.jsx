@@ -1,93 +1,86 @@
-import React, { useEffect } from "react";
-import { useState, useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import UserContext from "../../contexts/userContext";
 import storiesService from "../../services/storiesService";
 import usersService from "../../services/usersService";
-import { Link } from "react-router-dom";
-import UserContext from "../../contexts/userContext";
 
-//add new story
+// Add new story
 const StoryForm = () => {
   const userContext = useContext(UserContext);
-  const [userId, setUserId] = useState("");
+  const history = useHistory();
+  const authorNameKey = "tekij\u00E4nNimi";
+  const authorIdKey = "tekij\u00E4nId";
+
   const [userName, setUserName] = useState("");
   const [story, setStory] = useState({
-    tekijänNimi: "Mila",
     paikkakunta: "",
     pvm: "",
     kohde: "",
     tarina: "",
     kuva: "",
-    tekijänId: "",
+    [authorNameKey]: "",
+    [authorIdKey]: "",
   });
 
   useEffect(() => {
-    const fetchUserId = async (userEmailToFetch) => {
-      const res = await usersService.getUserByMail(userEmailToFetch);
-      return res.data.user[0]._id;
-    };
-    const fetchUserName = async (userEmailToFetch) => {
-      const res = await usersService.getUserByMail(userEmailToFetch);
-      return res.data.user[0].nimi;
-    };
-    (async () => {
-      const fetchedUserId = await fetchUserId(userContext.email);
-      const fetchedUserName = await fetchUserName(userContext.email);
-      setUserName(fetchedUserName);
-      setUserId(fetchedUserId);
-      setStory({
-        ...story,
-        tekijänNimi: fetchedUserName,
-        tekijänId: fetchedUserId,
-      });
-      // setStory({ ...story, tekijänId: fetchedUserId });
-    })();
-  }, []);
+    if (!userContext.email) {
+      return;
+    }
 
-  console.log(typeof userName, userName);
-  console.log(typeof userId, userId);
-  const handleName = (e) => {
-    e.preventDefault();
-    setStory({ ...story, tekijänNimi: e.target.value });
-  };
+    (async () => {
+      const res = await usersService.getUserByMail(userContext.email);
+      const fetchedUser = res.data.user[0];
+
+      if (!fetchedUser) {
+        return;
+      }
+
+      setUserName(fetchedUser.nimi);
+      setStory((prev) => ({
+        ...prev,
+        [authorNameKey]: fetchedUser.nimi,
+        [authorIdKey]: fetchedUser._id,
+      }));
+    })();
+  }, [authorIdKey, authorNameKey, userContext.email]);
 
   const handlePlace = (e) => {
-    e.preventDefault();
     setStory({ ...story, paikkakunta: e.target.value });
   };
 
   const handleDate = (e) => {
-    e.preventDefault();
     setStory({ ...story, pvm: e.target.value });
   };
 
   const handleDestination = (e) => {
-    e.preventDefault();
     setStory({ ...story, kohde: e.target.value });
   };
 
   const handleStory = (e) => {
-    e.preventDefault();
     setStory({ ...story, tarina: e.target.value });
   };
 
   const handlePic = (e) => {
-    e.preventDefault();
     setStory({ ...story, kuva: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
-      storiesService.createStory(story, userContext.token);
+      await storiesService.createStory(story, userContext.token);
       alert("Sucessfully added story");
+      history.push("/stories");
     } catch (err) {
       return err;
     }
   };
+
   return (
     <div className="loginWrapper">
       <div>{userName}</div>
       <div className="Auth-form-container">
-        <form className="Auth-form">
+        <form className="Auth-form" onSubmit={handleSubmit}>
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Create a story</h3>
             <div className="form-group mt-3">
@@ -101,9 +94,7 @@ const StoryForm = () => {
                 className="form-control mt-1"
                 placeholder="e.g Helsinki"
                 value={story.paikkakunta}
-                onChange={(e) => {
-                  handlePlace(e);
-                }}
+                onChange={handlePlace}
                 required
               />
             </div>
@@ -114,9 +105,7 @@ const StoryForm = () => {
                 className="form-control mt-1"
                 placeholder="e.g 2022-02-02"
                 value={story.pvm}
-                onChange={(e) => {
-                  handleDate(e);
-                }}
+                onChange={handleDate}
                 required
               />
             </div>
@@ -127,9 +116,7 @@ const StoryForm = () => {
                 className="form-control mt-1"
                 placeholder="e.g. Nuuksio"
                 value={story.kohde}
-                onChange={(e) => {
-                  handleDestination(e);
-                }}
+                onChange={handleDestination}
                 required
               />
             </div>
@@ -140,9 +127,7 @@ const StoryForm = () => {
                 className="form-control mt-1"
                 placeholder="Your story"
                 value={story.tarina}
-                onChange={(e) => {
-                  handleStory(e);
-                }}
+                onChange={handleStory}
                 required
               />
             </div>
@@ -153,26 +138,15 @@ const StoryForm = () => {
                 className="form-control mt-1"
                 placeholder="https://..."
                 value={story.kuva}
-                onChange={(e) => {
-                  handlePic(e);
-                }}
+                onChange={handlePic}
                 required
               />
             </div>
             <div className="d-grid gap-2 mt-3">
-              <Link className="btnLink" to="/stories">
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  onClick={(e) => handleSubmit(e)}
-                >
-                  Submit
-                </button>
-              </Link>
+              <button type="submit" className="btn btn-primary">
+                Submit
+              </button>
             </div>
-            {/* <p className="text-center mt-2">
-            Forgot <a href="#">password?</a>
-          </p> */}
           </div>
         </form>
       </div>

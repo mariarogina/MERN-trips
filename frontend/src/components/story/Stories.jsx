@@ -28,6 +28,7 @@ const Stories = ({ editStoryId, setEditStoryId }) => {
     return formattedDate;
   };
   console.log(stories);
+  const storiesNewestFirst = [...stories].reverse();
 
   return (
     <div className="storiesWrapper">
@@ -35,10 +36,8 @@ const Stories = ({ editStoryId, setEditStoryId }) => {
       {/* {UserContext.isLoggedIn? */}
       {userContext.isLoggedIn ? (
         <div>
-          <Link className="btnLink" to="/mystories">
-            <button className="simpleBtn btn btn-success">
-              Manage my stories
-            </button>
+          <Link className="btnLink" to="/addstory">
+            <button className="simpleBtn btn btn-primary"> Add a story </button>
           </Link>
         </div>
       ) : (
@@ -46,8 +45,10 @@ const Stories = ({ editStoryId, setEditStoryId }) => {
       )}
       {userContext.isLoggedIn ? (
         <div>
-          <Link className="btnLink" to="/addstory">
-            <button className="simpleBtn btn btn-primary"> Add a story </button>
+          <Link className="btnLink" to="/mystories">
+            <button className="simpleBtn btn btn-success">
+              Manage my stories
+            </button>
           </Link>
         </div>
       ) : (
@@ -67,7 +68,7 @@ const Stories = ({ editStoryId, setEditStoryId }) => {
               <th className="tableHead">Kertoja</th>
               <th className="tableHead">Kuva</th>
             </tr>
-            {stories.map((story) => {
+            {storiesNewestFirst.map((story) => {
               return (
                 <tr className="tableRow" key={story._id}>
                   <td className="tableCell">{formatDate(story.pvm)}</td>

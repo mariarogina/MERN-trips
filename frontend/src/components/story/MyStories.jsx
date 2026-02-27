@@ -40,6 +40,11 @@ const MyStories = ({ editStoryId, setEditStoryId }) => {
     <div className="storiesWrapper">
       <h3> My Stories</h3>
       <h2>{userName}</h2>
+      <div>
+        <Link className="btnLink" to="/addstory">
+          <button className="simpleBtn btn btn-primary"> Add a story </button>
+        </Link>
+      </div>
       {userContext.isLoggedIn ? (
         <div>
           <Link className="btnLink" to="/stories">
@@ -51,12 +56,6 @@ const MyStories = ({ editStoryId, setEditStoryId }) => {
       ) : (
         <></>
       )}
-
-      <div>
-        <Link className="btnLink" to="/addstory">
-          <button className="simpleBtn btn btn-primary"> Add a story </button>
-        </Link>
-      </div>
       {stories.map((i) => {
         return (
           <MyStory

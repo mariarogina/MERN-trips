@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import UserContext from "../../contexts/userContext";
 import storiesService from "../../services/storiesService";
 
@@ -7,6 +7,7 @@ import storiesService from "../../services/storiesService";
 const StoryEditForm = ({ editStoryId }) => {
   const [story, setStory] = useState({});
   const userContext = useContext(UserContext);
+  const history = useHistory();
 
   useEffect(() => {
     const fetchStory = async () => {
@@ -44,9 +45,11 @@ const StoryEditForm = ({ editStoryId }) => {
     setStory({ ...story, kuva: e.target.value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
-      storiesService.updateStory(
+      await storiesService.updateStory(
         story._id,
         {
           paikkakunta: story.paikkakunta,
@@ -58,6 +61,7 @@ const StoryEditForm = ({ editStoryId }) => {
         userContext.token
       );
       alert("Sucessfully updated story");
+      history.push("/mystories");
     } catch (err) {
       return err;
     }
@@ -71,7 +75,7 @@ const StoryEditForm = ({ editStoryId }) => {
   return (
     <div className="loginWrapper">
       <div className="Auth-form-container">
-        <form className="Auth-form">
+        <form className="Auth-form" onSubmit={handleSubmit}>
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Edit a story</h3>
             <div className="form-group mt-3">
@@ -135,11 +139,9 @@ const StoryEditForm = ({ editStoryId }) => {
               />
             </div>
             <div className="d-grid gap-2 mt-3">
-              <Link className="btnLink" to="/mystories">
-                <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
-                  Submit
-                </button>
-              </Link>
+              <button type="submit" className="btn btn-primary">
+                Submit
+              </button>
             </div>
           </div>
         </form>

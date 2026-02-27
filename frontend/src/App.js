@@ -1,5 +1,5 @@
 import React from "react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/Login";
@@ -16,9 +16,20 @@ import UsersStories from "./components/user/UsersStories";
 import SingleStory from "./components/story/SingleStory";
 
 export const App = () => {
-  const [token, setToken] = useState(false);
-  const [email, setEmail] = useState("");
+  const [token, setToken] = useState(() => localStorage.getItem("token"));
+  const [email, setEmail] = useState(() => localStorage.getItem("email") || "");
   const [editStoryId, setEditStoryId] = useState("");
+
+  useEffect(() => {
+    if (!token) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("email");
+      return;
+    }
+
+    localStorage.setItem("token", token);
+    localStorage.setItem("email", email || "");
+  }, [email, token]);
 
   const login = useCallback((token, sähköpostiosoite) => {
     setToken(token);
@@ -27,6 +38,7 @@ export const App = () => {
 
   const logout = useCallback(() => {
     setToken(null);
+    setEmail("");
   }, []);
 
   return (

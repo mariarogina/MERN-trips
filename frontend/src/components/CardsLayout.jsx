@@ -21,7 +21,7 @@ const CardsLayout = () => {
   return (
     <div className="cardsWrapper">
       {stories.map((i) => {
-        return <Card data={i} />;
+        return <Card data={i} key={i._id} />;
       })}
     </div>
   );
